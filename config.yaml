@@ -1,0 +1,23 @@
+title: "Organic Entropy"
+baseurl:  "https://organic-entropy.org"
+languageCode: "de-de"
+theme: "fixed"
+path: "articles"
+paginate: 5
+paginatePath: "page"
+publishdir: "public"
+metaDataFormat: "yaml"
+
+params:
+  Description: "You should know where your randomness comes from."
+  Copyright: "Content is licensed under a Creative Commons Attribution 4.0 International License"
+  Author: "Florian Baumann"
+  githubuser: "noqqe"
+  Keywords: "Entropy, Crypto, Cryptography, Random, /dev/random"
+  Twitter: "@noqqe"
+
+taxonomies:
+  tag: "tags"
+
+permalinks:
+  post: "articles/:filename/"

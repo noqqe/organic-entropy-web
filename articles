@@ -1,0 +1,251 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import re
+import os
+import click
+import nltk
+import urlparse
+import git
+import urllib
+import commands
+from subprocess import call
+import wikipedia
+from dateutil.parser import parse
+import datetime
+from twitter import *
+import feedparser
+import warnings
+
+warnings.filterwarnings("ignore")
+
+# Environment variables
+project_home =  os.path.expanduser("~/Code/entbehrlich.es")
+posts_home = project_home + "/content/post/"
+hugo = "/home/noqqe/.go/bin/hugo"
+rsync = "/usr/local/bin/rsync -avi --delete public/ aax:/var/www/htdocs/entbehrlich.es/"
+feedurl = "https://entbehrlich.es/index.xml"
+editor = "/usr/local/bin/vim"
+
+# Twitter credentials
+con_key = "aWoryvyvjQqV2aCDOyg6YJCJi"
+con_secret = "A8JhSSKM0996vjKV8NwKi8dvR2ApCfuRb6M8rRav6ctojhQcRk"
+access_token = "723558748581683201-QYcFL4pFqHxgflEjcxkeIE5BfMEI6JM"
+access_token_secret = "Dd8oGmYhXpMfGcFF3HdsqKO8iD2q902uuHFs7cUZI3HbI"
+
+
+# Little helpers
+def gen_blog_meta(title, date, tags):
+    """
+    Make a blog post header like
+    ---
+    title: foo
+    date: bar
+    draft: false
+    tags:
+    - foo
+    - bar
+    ---
+
+    :title: str
+    :date: str
+    :tags: list
+    :returns: str
+    """
+    head = "---\n"
+    n = "\n"
+    header = head + "title: " + title + n + "date: " + date + n + "draft: true" + n
+    header = header + "tags: "
+    for tag in tags:
+        header = header + n + "- " + tag.replace("Kategorie:", '')
+    header = header + n + head + n
+    return header
+
+def deploy():
+    """
+    Deploy blog to server
+    1. Compile Blog using hugo
+    2. rsync to serving httpd
+    """
+    status, output = commands.getstatusoutput(hugo)
+    print("BUILD BLOG\n")
+    print output
+    if status == 0:
+        status, output = commands.getstatusoutput(rsync)
+        print("\nDEPLOY BLOG TO SERVER\n")
+        print output
+        if status != 0:
+            print("Error: rsync failed")
+            return False
+    else:
+        print("Error: Hugo returned an error")
+        return False
+
+    return True
+
+def publish(post):
+    """
+    Pick draft post, update date and draft to false
+    """
+
+    t = datetime.datetime.now()
+    t = t.replace(microsecond=0)
+    t = t.isoformat()
+    path = posts_home + post
+    path = path.encode("utf8")
+
+    try:
+        open(path)
+    except IOError:
+        print("No such file")
+        return False
+
+    if 'draft: true' in open(path).read():
+        # because FUCK YOU HARD FILEINPUT!
+        commands.getstatusoutput('sed -i \'s#draft: true#draft: false#\' %s' % path)
+        commands.getstatusoutput('sed -i \'s#^date: .*#date: %s#\' %s' % (t, path))
+
+    return True
+
+def commit(post):
+    try:
+        repo = git.Repo(project_home)
+        repo.git.add(posts_home + post)
+        repo.git.commit(m=post)
+        print("Post %s committed" % post)
+        return True
+    except:
+        print("Post %s could not be committed" % post)
+        return False
+
+
+def tweet():
+    " Tweet latest blogpost from rss feed "
+
+    feed = feedparser.parse(feedurl)
+    title = feed['entries'][0]['title']
+    link = feed['entries'][0]['link']
+
+    message = title + " " + link
+
+    auth = OAuth(
+        consumer_key=con_key,
+        consumer_secret=con_secret,
+        token=access_token,
+        token_secret=access_token_secret,
+	)
+    t = Twitter(auth=auth)
+    t.statuses.update(status=message)
+    print("Tweeted \"%s\"" % message)
+
+    return True
+
+def build_url(url):
+    """
+    Build url for blogpost with urlencoding
+    like this [http://foo.bar/baz](http://foo.bar.baz)
+    :url: str
+    :returns: str
+    """
+    mdurl = '[' + url + ']'
+    mdurl = mdurl + '(' + url + ')'
+    return mdurl
+
+# CLI Commands
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+@click.argument('url')
+@click.option('pdate', '-d', '--date', default=str(datetime.datetime.now()))
+def new(url, pdate):
+    " Create new post and fetch content from wikipedia "
+
+    origurl = build_url(url)
+
+    # find wikipedia link
+    url = urlparse.urlparse(url)
+    lang = url.netloc.split('.')[0]
+    title = url.path.split('/')[2].replace('-',' ').replace('_',' ')
+    filename = title.replace(' ','-').replace('---','-').replace(')','').replace('(','') + '.md'
+
+    # set lang and title, fetch wikipedia article
+    try:
+        wikipedia.set_lang(lang)
+        wiki = wikipedia.page(title)
+        tags = wiki.categories
+        wiki = wiki.summary
+    except wikipedia.exceptions.DisambiguationError as e:
+        print(e)
+        return False
+
+    t = parse(pdate)
+    t = t.replace(hour=14, minute=0, microsecond=0)
+    t = t.isoformat()
+
+    # first sentence of the article and quote it for markdown
+    if len(wiki) >= 350:
+        wiki = nltk.tokenize.sent_tokenize(wiki)[0]
+    wiki = "> " + wiki
+
+    # generate markdown document
+    header = gen_blog_meta(title=title, date=t, tags=tags)
+    n = "\n"
+
+    text = header + n + origurl + n + n + wiki
+
+    # write markdown to the document
+    path = posts_home + filename
+    with open(path, "w") as f:
+        f.write(text.encode("utf-8"))
+        f.close()
+
+    print("Created Post: " + path)
+
+    # edit file
+    call([editor, path])
+
+    # commit to local repo
+    commit(filename)
+
+    return True
+
+@cli.command()
+@click.option('all', '--all', '-a',  is_flag=True)
+def queue(all):
+    """
+    Shows posts - by default all unpublished ones
+    """
+
+    posts = os.listdir(posts_home)
+    for post in posts:
+        if not all:
+            if 'draft: true' in open(posts_home + post).read():
+                print post
+        else:
+            print post
+
+@cli.command()
+@click.argument('post')
+def release(post):
+    " undraft, deploy and tweet "
+
+    # remove draft
+    publish(post)
+
+    # commit git changes
+    commit(post)
+
+    # build deploy to server
+    deploy()
+
+    # tweet the new post
+    tweet()
+
+    return True
+
+# Call wrapper to cli commands
+if __name__ == '__main__':
+    cli()

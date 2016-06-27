@@ -1,0 +1,15 @@
+{{ partial "header.html" . }}
+
+   <div class="content">
+    <div class="main">
+        <h1 class="non-highlight">
+        {{ range where .Data.Pages "Title" "Home" }}
+        <a href="{{ .Permalink }}">Organic Entropy</a>
+        </h1>
+
+        {{ .Content }}
+      {{ end }}
+    </div>
+   </div>
+    {{ partial "footer.html" . }}
+
