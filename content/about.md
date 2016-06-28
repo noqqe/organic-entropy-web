@@ -17,7 +17,7 @@ qaunz
 
 ## Contribute
 
-It's free and opensource! Just grab the source and do whatever you want!
+It's free and open source! Just grab the source and do whatever you want!
 
 * Site: [github.com/noqqe/organic-entropy-web](https://github.com/noqqe/organic-entropy-web)
 * Harvestd: [github.com/noqqe/organic-entropy](https://github.com/noqqe/organic-entropy)
