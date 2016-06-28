@@ -6,7 +6,7 @@ type: page
 
 ## Gifs!
 
-Because the internet loves gifs! Its actually quite fun. People were
+Because the internet loves gifs! It's actually quite fun. People were
 looking really strange at us as we're walking around with some kind of
 ghostbuster equipment.
 

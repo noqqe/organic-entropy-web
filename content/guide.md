@@ -6,13 +6,13 @@ type: page
 
 ## How to build your own organic entropy harvester
 
-To collect all those informations from the environment, you need some fancy
+To collect all those information from the environment, you need some fancy
 devices. We chose [tinkerforge](https://tinkerforge.com) for easy
-assembling without the soldering and so called "fun".
+assembling without the soldering and so-called "fun".
 
 ### Sensors (Bricklets)
 
-All you need are the following Sensors: [Accelerometer](https://www.tinkerforge.com/en/shop/bricklets/accelerometer-bricklet.html),
+All you need are the following sensors: [Accelerometer](https://www.tinkerforge.com/en/shop/bricklets/accelerometer-bricklet.html),
 [Temperature](https://www.tinkerforge.com/en/shop/bricklets/sensors/temperature-bricklet.html),
 [UV light](https://www.tinkerforge.com/en/shop/bricklets/sensors/uv-light-bricklet.html),
 [Sound intensity](https://www.tinkerforge.com/en/shop/bricklets/sensors/sound-intensity-bricklet.html)
@@ -29,11 +29,11 @@ sensor](https://www.tinkerforge.com/en/shop/bricklets/sensors/dust-detector-bric
 interesting. Just use whatever humanity did/gave to you.
 
 This is probably the most expensive `GPG` key you will ever generate. But
-hey. You also pay extra for bio food!
+hey. You also pay extra for organic food!
 
 ### The Harvestor
 
-Setup your RaspberryPi and
+Set up your RaspberryPi and
 [brickd](http://www.tinkerforge.com/en/doc/Software/Brickd_Install_Linux.html#brickd-install-linux).
 The secure harvesting software (multiple times audited by the council of
 the elder hedgehogs) has to be installed on the system.
@@ -46,7 +46,7 @@ $ ./harvestd > /mnt/entropy.txt
 ```
 
 You probably want to configure this daemon to be started automatically in
-some way. Im sure you will find a way. You're a big boy.
+some way. I'm sure you will find a way. You're a big boy.
 
 ## How to collect entropy
 
@@ -63,9 +63,9 @@ To give you some inspirations:
 
 ### How to insert...
 
-After a hard day out on the field. Theres nothing better then enjoying the
+After a hard day out on the field. There's nothing better than enjoying the
 fruits of your work. Grab the SD-Card of your RaspberryPI and plug(&pray)
-it into your Laptop.
+it into your laptop.
 
 ```
 $ git clone https://github.com/noqqe/organic-entropy
@@ -88,8 +88,8 @@ Doesn't it feel great? Come on. It does! Feel it.
 ### End
 
 Congrats! You supplied real organic entropy to your system. How wonderful
-is that? Its really important to tell all your friends that you collect
-entropy by yourself. Theres absolutely no necessity if the topic of the
+is that? It's really important to tell all your friends that you collect
+entropy by yourself. There's absolutely no necessity if the topic of the
 conversation is related anyhow. Quite the opposite!
 
 And if you're vegan its even better. You can combo organic entropy with

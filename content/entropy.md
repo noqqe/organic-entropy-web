@@ -18,7 +18,7 @@ Your system maintains and refills entropy from various sources. Key
 strokes, mouse movement, disk activity. Basically, everything that can be
 measured in a non-deterministic way.
 
-For example you can act completly retarded by collecting entropy with an
+For example you can act completely retarded by collecting entropy with an
 accelerometer.
 
 <center>
@@ -30,7 +30,7 @@ watch [Randomness: how arc4random has grown since
 1998](https://www.youtube.com/watch?v=gp_90-3R0pE) (OpenBSD).
 A short summary of how different operating systems deal with randomness can be
 found on [Wikipedia](https://en.wikipedia.org/wiki/Entropy_(computing)).
-There also some new interesting ideas for the Linux kernel see
+There are also some new interesting ideas for the Linux kernel see
 [lwn.net](http://lwn.net/Articles/691941/).
 
 
