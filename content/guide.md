@@ -21,7 +21,7 @@ and one
 to connect them all together. Right after that, you purchase an RaspberryPI
 and attach the entropy milking machine to it.
 
-{{< figure src="/img/3.jpg">}}
+{{< figure src="/img/3.jpg" class="img-responsive">}}
 
 Other sensors are possible. If you live in Fukushima or near Chernobyl, you
 propably like to attach a [Geiger counter](https://en.wikipedia.org/wiki/Geiger_counter). Some others living in Tokyo may find a [dust
@@ -55,11 +55,11 @@ entropy!
 
 To give you some inspirations:
 
-{{< figure src="/img/5.jpg">}}
+{{< figure src="/img/5.jpg" class="img-responsive">}}
 <center>
-{{< figure src="/img/7.jpg">}}
+{{< figure src="/img/7.jpg" class="img-responsive">}}
 </center>
-{{< figure src="/img/12.jpg">}}
+{{< figure src="/img/12.jpg" class="img-responsive">}}
 
 ### How to insert...
 

@@ -20,7 +20,7 @@ We think that should be different! We assembled a device that collects
 entropy from real free living happy biologic sources. And this is how it
 looks. Without antibiotics and pesticides.
 
-{{< figure src="/img/harvestor1.jpg" >}}
+{{< figure src="/img/harvestor1.jpg" class="img-responsive" >}}
 
 Start using the organic entropy harvester that we created. See
 [Guide](/guide) to build and use the device which
@@ -40,10 +40,10 @@ This is how alternative hipsters use computers.
 
 
 Bees! *surrrr*
-{{< figure src="/img/4.gif" >}}
+{{< figure src="/img/4.gif" class="img-responsive" >}}
 
 UV Light!
-{{< figure src="/img/5.gif" >}}
+{{< figure src="/img/5.gif" class="img-responsive" >}}
 
 The future of crypto provided by local
 entropy farmers. Join thousands of people, businesses and hedgehogs.
