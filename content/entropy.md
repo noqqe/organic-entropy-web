@@ -22,7 +22,7 @@ For example you can act completely retarded by collecting entropy with an
 accelerometer.
 
 <center>
-{{< figure src="/img/1.gif" >}}
+{{< figure src="/img/1.gif" class="img-responsive">}}
 </center>
 
 If you really wanna know how to deal with entropy nicely and how it evolved
@@ -32,5 +32,3 @@ A short summary of how different operating systems deal with randomness can be
 found on [Wikipedia](https://en.wikipedia.org/wiki/Entropy_(computing)).
 There are also some new interesting ideas for the Linux kernel see
 [lwn.net](http://lwn.net/Articles/691941/).
-
-
