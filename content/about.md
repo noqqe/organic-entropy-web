@@ -11,10 +11,6 @@ noqqe
 * Blog: [noqqe.de](https://noqqe.de)
 * Twitter: [@noqqe](https://twitter.com/noqqe)
 
-qaunz
-
-* Twitter: [@qaunz](https://twitter.com)
-
 ## Contribute
 
 It's free and open source! Just grab the source and do whatever you want!
